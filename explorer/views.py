@@ -325,7 +325,7 @@ class PlayQueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
         return self.render()
 
     def post(self, request):
-        sql = request.POST.get('sql')
+        sql = request.POST.get('sql').replace("%", "%%")
         show = url_get_show(request)
         query = Query(sql=sql, title="Playground", connection=request.POST.get('connection'))
         passes_blacklist, failing_words = query.passes_blacklist()

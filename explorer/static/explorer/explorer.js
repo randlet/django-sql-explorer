@@ -268,11 +268,12 @@ define(["codemirror", "jquery", "jquery-cookie", ], function(CodeMirror, $){
                 pivotState = {onRefresh: this.savePivotState};
             }
         }
-        pivotState.renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers, $.pivotUtilities.export_renderers);
+        pivotState.renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
 
         var width = $(".overflow-wrapper").width() - 400;
         var height = $(".overflow-wrapper").height() - 150;
 
+        pivotState.unusedAttrsVertical = true;
         pivotState.rendererOptions = {
             c3: {size: {width: width, height: height}}
         };
