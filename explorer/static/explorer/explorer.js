@@ -22,7 +22,8 @@ define(["codemirror", "jquery", "jquery-cookie", ], function(CodeMirror, $){
             mode: "text/x-sql",
             lineNumbers: 't',
             autofocus: true,
-            height: 500,
+            height: 300,
+            viewportMargin: Infinity,
             extraKeys: {
                 "Ctrl-Enter": function() { this.doCodeMirrorSubmit(); }.bind(this),
                 "Cmd-Enter": function() { this.doCodeMirrorSubmit(); }.bind(this),
@@ -267,6 +268,14 @@ define(["codemirror", "jquery", "jquery-cookie", ], function(CodeMirror, $){
                 pivotState = {onRefresh: this.savePivotState};
             }
         }
+        pivotState.renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers, $.pivotUtilities.export_renderers);
+
+        var width = $(".overflow-wrapper").width() - 400;
+        var height = $(".overflow-wrapper").height() - 150;
+
+        pivotState.rendererOptions = {
+            c3: {size: {width: width, height: height}}
+        };
 
         $(".pivot-table").pivotUI(this.$table, pivotState);
         if (navToPivot) {
