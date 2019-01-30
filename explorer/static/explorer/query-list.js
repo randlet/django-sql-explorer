@@ -2,7 +2,6 @@ define(["jquery", "jquery-cookie"], function($){
 
     function QueryList(){
 
-
         var $emailCsv = $('.email-csv');
 
         var isValidEmail = function (email) {
