@@ -245,7 +245,7 @@ class ListQueryView(PermissionRequiredMixin, ExplorerContextMixin, ListView):
 
         dict_list = []
         rendered_headers = []
-        pattern = re.compile('[\W_]+')
+        pattern = re.compile(r'[\W_]+')
 
         headers = Counter([q.title.split(' - ')[0] for q in self.object_list])
 
