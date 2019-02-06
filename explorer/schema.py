@@ -1,13 +1,13 @@
 from django.core.cache import cache
-from explorer.utils import get_valid_connection
-from explorer.tasks import build_schema_cache_async
 from explorer.app_settings import (
-    EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES,
-    EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES,
     ENABLE_TASKS,
     EXPLORER_ASYNC_SCHEMA,
-    EXPLORER_CONNECTIONS
+    EXPLORER_CONNECTIONS,
+    EXPLORER_SCHEMA_EXCLUDE_TABLE_PREFIXES,
+    EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES,
 )
+from explorer.tasks import build_schema_cache_async
+from explorer.utils import get_valid_connection
 
 
 # These wrappers make it easy to mock and test
@@ -59,8 +59,13 @@ def build_schema_info(connection_alias):
             ]
 
         """
-    connection = get_valid_connection(connection_alias)
+    # connection = get_valid_connection(connection_alias)
+
+    # QAT specific note, use default connection to build schema
+    from django.db import connections
+    connection = connections['default']
     ret = []
+
     with connection.cursor() as cursor:
         tables_to_introspect = connection.introspection.table_names(cursor)
 
